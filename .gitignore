@@ -1,0 +1,7 @@
+# Build outputs
+build/
+*.o
+*.d
+
+# Local ACIS SDK/runtime package
+acisR24-linux/

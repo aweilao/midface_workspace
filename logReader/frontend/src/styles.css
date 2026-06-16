@@ -1,0 +1,651 @@
+:root {
+  color: #20251f;
+  background: #f4f5f0;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.appShell {
+  min-height: 100vh;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.workspaceHeader,
+.assetImportBar,
+.workspaceModes,
+.scriptPanel,
+.resultsPane,
+.threeCanvasPanel,
+.threeInspector,
+.selectionScriptPane,
+.renderBlock {
+  border: 1px solid #d8ddd2;
+  background: #fbfcf8;
+  border-radius: 8px;
+}
+
+.workspaceHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+}
+
+.workspaceHeader h1,
+.panelTitle h2,
+.inspectorTitle h2,
+.renderBlock h3 {
+  margin: 0;
+}
+
+.workspaceHeader h1 {
+  font-size: 24px;
+  font-weight: 720;
+}
+
+.eyebrow {
+  margin: 0 0 3px;
+  color: #62705f;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.statusStrip {
+  min-height: 36px;
+  padding: 8px 12px;
+  border: 1px solid #d6dfd3;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #42503f;
+  background: #f7faf2;
+  max-width: 52vw;
+}
+
+.statusStrip span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.statusStrip.error {
+  color: #9b2626;
+  border-color: #edc7c4;
+  background: #fff6f4;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #3d9d5c;
+  flex: 0 0 auto;
+}
+
+.errorDot {
+  background: #d84c3e;
+}
+
+.assetImportBar {
+  padding: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.topFilePicker,
+.primaryButton,
+.ghostButton,
+.iconButton {
+  border: 1px solid #cbd5c6;
+  border-radius: 7px;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: #293428;
+  background: #ffffff;
+  text-decoration: none;
+}
+
+.topFilePicker {
+  min-width: 180px;
+  max-width: 280px;
+  padding: 0 11px;
+  position: relative;
+}
+
+.topFilePicker span,
+.fileButton span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.topFilePicker input,
+.fileButton input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.primaryButton {
+  padding: 0 13px;
+  border-color: #214a40;
+  color: #ffffff;
+  background: #214a40;
+  font-weight: 700;
+}
+
+.ghostButton {
+  padding: 0 11px;
+  background: #f7f9f2;
+}
+
+.iconButton {
+  width: 34px;
+  padding: 0;
+}
+
+.fileButton {
+  position: relative;
+  overflow: hidden;
+}
+
+.topMetrics {
+  margin-left: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.topMetrics span,
+.chipList span,
+.tagList span {
+  border-radius: 999px;
+  background: #edf3e7;
+  color: #334431;
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+.workspaceModes {
+  padding: 5px;
+  width: max-content;
+  display: flex;
+  gap: 4px;
+}
+
+.workspaceModes button,
+.segmentedControl button {
+  border: 0;
+  border-radius: 6px;
+  min-height: 34px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: transparent;
+  color: #4b5748;
+}
+
+.workspaceModes button.active,
+.segmentedControl button.active {
+  background: #224c42;
+  color: #ffffff;
+}
+
+.logWorkspace {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(340px, 440px) minmax(0, 1fr);
+  gap: 12px;
+  flex: 1;
+}
+
+.scriptPanel,
+.selectionScriptPane {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+}
+
+.scriptPanel.compact {
+  border: 0;
+  padding: 0;
+}
+
+.panelTitle,
+.inspectorTitle,
+.blockHeader,
+.panelSubhead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.panelTitle,
+.inspectorTitle {
+  justify-content: flex-start;
+}
+
+.scriptToolbar,
+.scriptActions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.scriptToolbar select,
+.scriptNameInput,
+.fieldLabel select {
+  width: 100%;
+  min-height: 36px;
+  border: 1px solid #cbd5c6;
+  border-radius: 7px;
+  padding: 0 10px;
+  background: #ffffff;
+}
+
+.scriptNameInput {
+  flex: 0 0 auto;
+}
+
+.scriptBox {
+  width: 100%;
+  min-height: 430px;
+  resize: vertical;
+  border: 1px solid #cbd5c6;
+  border-radius: 7px;
+  padding: 12px;
+  font-family: "Cascadia Mono", "Fira Code", Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #1f2a1d;
+  background: #ffffff;
+}
+
+.compact .scriptBox {
+  min-height: 220px;
+}
+
+.saveHint {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #6c7868;
+  font-size: 12px;
+}
+
+.resultsPane {
+  min-width: 0;
+  min-height: 0;
+  padding: 14px;
+  overflow: auto;
+}
+
+.emptyState,
+.emptyPick {
+  min-height: 240px;
+  display: grid;
+  place-items: center;
+  gap: 10px;
+  color: #71806d;
+  text-align: center;
+}
+
+.renderBlocks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.renderBlocks.compact {
+  max-height: 420px;
+  overflow: auto;
+}
+
+.renderBlock {
+  padding: 13px;
+}
+
+.renderBlock h3 {
+  font-size: 15px;
+  margin-bottom: 9px;
+}
+
+.renderBlock p {
+  margin: 0;
+}
+
+.renderBlock pre {
+  max-height: 440px;
+  overflow: auto;
+  margin: 0;
+  border-radius: 7px;
+  padding: 12px;
+  background: #15201b;
+  color: #e8f4e8;
+  font-size: 12px;
+}
+
+.tableWrap {
+  overflow: auto;
+  border: 1px solid #dce3d7;
+  border-radius: 7px;
+}
+
+table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 9px 10px;
+  border-bottom: 1px solid #e5eadf;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #eef3e9;
+  color: #42503f;
+  font-size: 12px;
+}
+
+.seqCell {
+  width: 76px;
+  color: #60705b;
+  font-family: "Cascadia Mono", Consolas, monospace;
+}
+
+.tagList,
+.chipList,
+.resultProperties,
+.colorCommandList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chipList em {
+  color: #7a8675;
+  font-style: normal;
+}
+
+.resultProperty {
+  border: 1px solid #d9e1d4;
+  border-radius: 7px;
+  padding: 5px 7px;
+  display: inline-flex;
+  gap: 6px;
+  max-width: 360px;
+  background: #ffffff;
+}
+
+.resultProperty b {
+  color: #2d3a2b;
+}
+
+.resultProperty em {
+  color: #5d6b58;
+  font-style: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.colorCommandList span {
+  border: 1px solid #d9e1d4;
+  border-radius: 999px;
+  padding: 4px 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+}
+
+.colorCommandList i {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+}
+
+.modelWorkspace {
+  min-height: 0;
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 12px;
+}
+
+.threeWorkspace {
+  min-width: 0;
+  min-height: 680px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 12px;
+}
+
+.threeCanvasPanel {
+  min-width: 0;
+  min-height: 680px;
+  position: relative;
+  overflow: hidden;
+}
+
+.threeCanvasHost {
+  width: 100%;
+  height: 100%;
+  min-height: 680px;
+}
+
+.threeCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.threeStatus {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  max-width: calc(100% - 24px);
+  border: 1px solid rgba(24, 44, 36, 0.16);
+  border-radius: 999px;
+  padding: 7px 10px;
+  color: #2c3b31;
+  background: rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.threeStatus.error {
+  color: #9b2626;
+}
+
+.threeInspector {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.fieldLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #53604f;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.segmentedControl {
+  border: 1px solid #d6dfd1;
+  border-radius: 7px;
+  padding: 4px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.twoPartControl {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.metricGrid,
+.colorValueGrid {
+  border: 1px solid #d9e1d4;
+  border-radius: 7px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: minmax(82px, auto) minmax(0, 1fr);
+  gap: 7px 10px;
+  background: #ffffff;
+}
+
+.metricGrid span,
+.colorValueGrid span {
+  color: #687564;
+}
+
+.metricGrid b,
+.colorValueGrid b {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pickedPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pickedColorSwatch {
+  height: 38px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 7px;
+}
+
+.chipPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #455341;
+}
+
+.spin {
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1180px) {
+  .logWorkspace,
+  .modelWorkspace,
+  .threeWorkspace {
+    grid-template-columns: 1fr;
+  }
+
+  .threeWorkspace,
+  .threeCanvasPanel,
+  .threeCanvasHost {
+    min-height: 520px;
+  }
+}
+
+@media (max-width: 720px) {
+  .appShell {
+    padding: 10px;
+  }
+
+  .workspaceHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .statusStrip {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .workspaceModes,
+  .topFilePicker,
+  .primaryButton,
+  .ghostButton {
+    width: 100%;
+  }
+
+  .assetImportBar,
+  .scriptActions,
+  .scriptToolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .topMetrics {
+    margin-left: 0;
+  }
+}

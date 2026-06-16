@@ -1,0 +1,112 @@
+run_context:
+  workspace_root: "."
+  start_method: sat_pipeline
+  input_sat_path: example/test17.sat
+  output_root: test17_output
+  stop_after_step: 7
+  enable_diagnostics: true
+  append_diagnostics: false
+  enable_checkpoints: false
+
+  debug_sat_outputs:
+    - step1.colored_body
+    - step2.group_colored_body
+    - step3.pair_colored_body
+    - step5.mid_patch_faces
+    - step6.extended_mid_faces
+    - step6.extended_wall_faces
+    - step6.preselect_split_faces
+    - step6.selected_faces
+
+step1:
+  build_adjacency: true
+  build_sample_summary: true
+  emit_face_events: false
+
+step2:
+  enable_surface_prefilter: true
+  enable_sample_refine: true
+  emit_prefilter_events: false
+  emit_refine_events: true
+  emit_group_events: false
+  emit_group_artifacts: false
+  emit_traced_pair_samples: false
+
+step3:
+  enable_coarse_normal_prefilter: true
+  enable_surface_prefilter: true
+  enable_pair_refine: true
+  allow_multi_pair_per_group: true
+  emit_candidate_events: true
+  emit_refine_events: true
+  emit_pair_events: true
+  pair_group_thickness_ratio_max: 2.0
+
+step4:
+  build_pair_links: true
+  build_walls: true
+  emit_relation_events: true
+  enable_tiny_face_partner_patch: true
+  enable_orphan_wall_bridge: true
+  enable_mm2_angle_gate: true
+  enable_mm2_sweep_wall: true
+  min_link_hits: 1
+  pair_mm2_angle_deg: 5.0
+
+step5:
+  build_sheet_body: true
+  emit_patch_events: true
+  min_component_pairs: 1
+  keep_isolated_pairs: true
+  enable_one_to_n_merge_units: false
+  spline_fit_only: false
+  spline_fit_tol_scale: 1.0
+  spline_fit_tol_min: 0.000001
+  spline_fit_tol_max: 0.05
+  spline_grid_min: 4
+  spline_grid_max: 9
+  freeform_uv_init_u: 6
+  freeform_uv_init_v: 6
+  freeform_uv_refine_rounds: 3
+  freeform_uv_refine_angle_deg: 20.0
+  freeform_uv_max_u: 28
+  freeform_uv_max_v: 28
+  freeform_uv_fail_ratio_max: 0.45
+  freeform_uv_min_valid_points: 16
+  analytic_patch_inflate: 1.10
+  analytic_min_half_extent: 0.001
+
+step6:
+  enable_trim: true
+  emit_selection_events: true
+  build_slice_adjacency: true
+  adjacency_distance_units: 10.0
+  adjacency_sample_count: 24
+  adjacency_min_pass_ratio: 0.60
+  enable_source_trim: false
+  enable_body_prewall_extend: true
+  mid_extend_scale: 1.50
+  mid_extend_min: 0.0001
+  wall_extend_scale: 3.0
+  wall_extend_min: 0.0001
+  wall_sphere_radius_boost_ratio: 0.05
+  use_api_extend_fail_fallback_only: true
+  api_extend_fail_fallback_use_uv_expand: true
+  cylinder_uv_expand_scale: 3.0
+  sphere_uv_expand_scale: 3.0
+  torus_uv_expand_scale: 3.0
+  extend_fail_fallback_sample_count: 64
+  uniform_sample_count: 24
+  pass_ratio_required: 0.50
+  facing_min_cos: 0.80
+  area_min_ratio: 0.06
+  select_sample_count: 24
+  min_sample_success_ratio: 0.10
+  max_norm_std: 10
+  max_mean_thickness_error: 10
+  min_normal_support_ratio: 0.10
+  nonfree_relax_factor: 1.20
+  nonfree_min_pass_ratio: 0.40
+  freeform_relax_factor: 1.50
+  freeform_min_pass_ratio: 0.40
+  small_face_ratio: 0.0002

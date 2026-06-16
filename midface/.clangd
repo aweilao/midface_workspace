@@ -1,0 +1,7 @@
+CompileFlags:
+  Add:
+    - -std=c++11
+    - -I/root/midface_package/midface
+    - -I/root/midface_package/midface/third_party/mini-yaml
+    - -I/root/midface_package/acisR24-linux/include
+    - -I/root/midface_package/acisR24-linux/ha/include

@@ -1,0 +1,15 @@
+# Runtime files
+*.log
+*.pid
+events.jsonl
+
+# Frontend generated files
+frontend/dist/
+frontend/node_modules/
+frontend/*.tsbuildinfo
+frontend/vite.config.js
+frontend/vite.config.d.ts
+
+# Local SAT/debug artifacts
+*.sat
+*:Zone.Identifier

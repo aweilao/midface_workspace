@@ -1,0 +1,94 @@
+CXX ?= g++
+
+ROOT_DIR := $(abspath ..)
+PACKAGE_DIR := $(abspath .)
+BUILD_DIR ?= $(PACKAGE_DIR)/build
+TARGET ?= $(BUILD_DIR)/run_midface
+CONFIG ?= configs/cangduan.yaml
+CONFIG_PATH := $(if $(wildcard $(CONFIG)),$(abspath $(CONFIG)),$(abspath ../$(CONFIG)))
+OBJ_DIR := $(BUILD_DIR)/obj
+
+ACIS_ROOT ?= $(ROOT_DIR)/acisR24-linux
+ACIS_PLATFORM ?= linux_amd_64_so
+ACIS_BIN := $(ACIS_ROOT)/$(ACIS_PLATFORM)/code/bin
+ACIS_LIB := $(ACIS_ROOT)/$(ACIS_PLATFORM)/code/lib
+
+CPPFLAGS += \
+	-I$(PACKAGE_DIR) \
+	-I$(PACKAGE_DIR)/third_party/mini-yaml \
+	-I$(ACIS_ROOT)/include \
+	-I$(ACIS_ROOT)/ha/include
+
+CXXFLAGS += -std=c++11 -O2
+DEPFLAGS = -MMD -MP
+LDFLAGS += \
+	-L$(ACIS_BIN) \
+	-L$(ACIS_LIB) \
+	-Wl,-rpath,$(ACIS_BIN)
+LDLIBS += -lSpaACIS -ldl -lpthread -lm
+
+SOURCES := \
+	$(PACKAGE_DIR)/MidFace.cpp \
+	$(PACKAGE_DIR)/MidSurface.cpp \
+	$(PACKAGE_DIR)/config/ConfigNode.cpp \
+	$(PACKAGE_DIR)/config/MidSurfaceConfigLoader.cpp \
+	$(PACKAGE_DIR)/config/YamlConfigLoader.cpp \
+	$(PACKAGE_DIR)/core/DiagnosticSink.cpp \
+	$(PACKAGE_DIR)/core/MidSurfaceNewTypes.cpp \
+	$(PACKAGE_DIR)/core/RunContext.cpp \
+	$(PACKAGE_DIR)/steps/Step1FaceAnalyze.cpp \
+	$(PACKAGE_DIR)/steps/Step2GroupBuild.cpp \
+	$(PACKAGE_DIR)/steps/Step3PairBuild.cpp \
+	$(PACKAGE_DIR)/steps/Step4RelationBuild.cpp \
+	$(PACKAGE_DIR)/steps/Step5MidPatchBuild.cpp \
+	$(PACKAGE_DIR)/steps/Step6TrimSelect.cpp \
+	$(PACKAGE_DIR)/steps/Step7Stitch.cpp \
+	$(PACKAGE_DIR)/third_party/mini-yaml/yaml/Yaml.cpp \
+	$(PACKAGE_DIR)/utils/AcisSatWriter.cpp \
+	$(PACKAGE_DIR)/utils/CheckpointStore.cpp \
+	$(PACKAGE_DIR)/utils/ColorUtils.cpp \
+	$(PACKAGE_DIR)/utils/DebugSatBuilder.cpp \
+	$(PACKAGE_DIR)/utils/FaceSheetBodySatWriter.cpp \
+	$(PACKAGE_DIR)/utils/GroupUtils.cpp \
+	$(PACKAGE_DIR)/utils/IdUtils.cpp \
+	$(PACKAGE_DIR)/utils/JsonUtils.cpp \
+	$(PACKAGE_DIR)/utils/PathUtils.cpp \
+	$(PACKAGE_DIR)/utils/ResultJsonWriter.cpp \
+	$(PACKAGE_DIR)/utils/SamplingUtils.cpp \
+	$(PACKAGE_DIR)/utils/Step1Checkpoint.cpp \
+	$(PACKAGE_DIR)/utils/StructuredEventWriter.cpp \
+	$(PACKAGE_DIR)/utils/TraceFilter.cpp \
+	$(PACKAGE_DIR)/run_midface.cpp
+
+OBJECTS := $(patsubst $(PACKAGE_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SOURCES))
+DEPS := $(OBJECTS:.o=.d)
+
+.PHONY: all clean run print-paths
+
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS) | $(BUILD_DIR)
+	$(CXX) $(OBJECTS) $(LDFLAGS) $(LDLIBS) -o $@
+
+$(OBJ_DIR)/%.o: $(PACKAGE_DIR)/%.cpp
+	mkdir -p $(dir $@)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(DEPFLAGS) -c $< -o $@
+
+$(BUILD_DIR):
+	mkdir -p $@
+
+run: $(TARGET)
+	cd $(ROOT_DIR) && $(TARGET) $(CONFIG_PATH)
+
+print-paths:
+	@echo "PACKAGE_DIR=$(PACKAGE_DIR)"
+	@echo "BUILD_DIR=$(BUILD_DIR)"
+	@echo "TARGET=$(TARGET)"
+	@echo "ACIS_ROOT=$(ACIS_ROOT)"
+	@echo "ACIS_BIN=$(ACIS_BIN)"
+	@echo "ACIS_LIB=$(ACIS_LIB)"
+
+clean:
+	rm -rf $(BUILD_DIR)
+
+-include $(DEPS)
