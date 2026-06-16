@@ -1,2 +1,6 @@
+使用midFace：
+把该项目和acisR24-linux放在同一目录下，后续看agent.md
+
+使用logReader：
 先把输出的sat文件在acishoops3dpartviewerd.exe中另存为obj，然后
 打开logReader/frontend/dist/index.html，把输出文件里的jsonl和obj还有mtl导入后就可以在threejs那里看到，注意导入的什么模型要切换相应的colormap不然识别不到
